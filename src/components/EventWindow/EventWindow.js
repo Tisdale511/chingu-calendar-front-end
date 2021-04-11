@@ -1,8 +1,8 @@
 import React from 'react'
-
+import './EventWindow.css';
 const EventWindow = () => {
     return (
-        <div>
+        <div className='EventWindow'>
             
         </div>
     )
