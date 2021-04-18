@@ -29,8 +29,6 @@ const EventWindow = ({events, setEvents, day}) => {
                 <h3>
                     {event.description} <Button color="danger">{event.id}</Button>
                 </h3>)} 
-            {/* <Button color="danger"></Button>{'Delete'} */}
-
             {/* takes filtered array, and displays each event's description when that day is clicked on */}
         </div>
     )
