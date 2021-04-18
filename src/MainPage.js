@@ -9,12 +9,12 @@ const MainPage = () => {
     const [events, setEvents] = React.useState([])
     const [day, setDay] = React.useState(null)
 
-    React.useEffect(() => fetch("http://localhost:3000/events")
+    React.useEffect(() => fetch("http://localhost:3000/events")// CORRECT
     .then(response => response.json())
-    .then(response => setEvents(response)), [])
+    .then(response => setEvents(response)), []) // we want this to run only if a dependency array changes. in this case we only want it to run once, so by adding an empty array that will never change, we prevent useEffect from re rendering
     
-    // fetch("http://localhost:3000/events")
-    // .then(response => setEvents(response))
+    // fetch("http://localhost:3000/events")  // WRONG
+    // .then(response => setEvents(response)) // this will cause infinite loop, when it gets to setEvents(response), it will trigger a re render, run setEvents(response) again, so on and so fourth
 
 
     return (
