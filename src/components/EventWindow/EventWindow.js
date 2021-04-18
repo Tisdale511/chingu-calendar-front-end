@@ -7,6 +7,7 @@ const EventWindow = ({events, setEvents, day}) => {
     
     if(!day){
         return(
+            // incase no day is selected, displays this as default
             <>
                 Please select a day
             </> 
@@ -19,12 +20,13 @@ const EventWindow = ({events, setEvents, day}) => {
         first.getDate() === second.getDate();
 
 
-    const findMatchingDay = events.filter(event => datesAreOnSameDay(day, new Date(event.startDate)))
+    const findMatchingDay = events.filter(event => datesAreOnSameDay(day, new Date(event.startDate))) // searches through all events to compare the current 'day' to the day of 'event'
 
     return (
         <div className='EventWindow'>
             {`Currently selected day is ${day}`}
             {findMatchingDay.map(event => <h3>{event.description}</h3>)}
+            {/* takes filtered array, and displays each event's description when that day is clicked on */}
         </div>
     )
 }

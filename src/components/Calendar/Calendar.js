@@ -14,14 +14,17 @@ const Calendar = ({events, day, setDay}) => {
     // simple example: put dot on every even day
 
         const datesAreOnSameDay = (first, second) =>
-        first.getFullYear() === second.getFullYear() &&
-        first.getMonth() === second.getMonth() &&
-        first.getDate() === second.getDate();
+            first.getFullYear() === second.getFullYear() &&
+            first.getMonth() === second.getMonth() &&
+            first.getDate() === second.getDate();
 
 
 
     return (
-        <ReactCalendar onClickDay={(value) => setDay(value)} tileContent={tile => tile.date}/>
+        // refer to react calendar documentation for the line below
+        // runs onClickDay function anytime a day on the calendar is clicked
+        <ReactCalendar/>
+        // <ReactCalendar onClickDay={(value) => setDay(value)} tileContent={tile => tile.date}/>
     );
 }
 
