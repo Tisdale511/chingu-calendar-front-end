@@ -6,11 +6,11 @@ import Calendar from './components/Calendar/Calendar';
 
 const MainPage = () => {
 
-    const [events, setEvents] = React.useState([])
+    const [events, setEvents] = React.useState([]) // hands back two element array, first is value, 'events', second is setter function, 'setEvents'
     const [day, setDay] = React.useState(null)
 
     React.useEffect(() => fetch("http://localhost:3000/events")// CORRECT
-    .then(response => response.json())
+    .then(response => response.json()) // change response to JSON format 
     .then(response => setEvents(response)), []) // we want this to run only if a dependency array changes. in this case we only want it to run once, so by adding an empty array that will never change, we prevent useEffect from re rendering
     
     // fetch("http://localhost:3000/events")  // WRONG
