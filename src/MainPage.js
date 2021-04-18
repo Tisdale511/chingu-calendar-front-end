@@ -7,7 +7,7 @@ import Calendar from './components/Calendar/Calendar';
 const MainPage = () => {
 
     const [events, setEvents] = React.useState([]) // hands back two element array, first is value, 'events', second is setter function, 'setEvents'
-    const [day, setDay] = React.useState(null)
+    const [day, setDay] = React.useState(null) // start as null just to give a single value.
 
     React.useEffect(() => fetch("http://localhost:3000/events")// CORRECT
     .then(response => response.json()) // change response to JSON format 
