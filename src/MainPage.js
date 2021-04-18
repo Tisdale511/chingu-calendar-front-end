@@ -22,10 +22,12 @@ const MainPage = () => {
             <Row>
                 <Col xs='8' className='column'>    {/**left*/}
                     <Header />
-                    <Calendar events={events} day={day} setDay={setDay}/> {/* day gets set here, not in event window, thus setDay is passed to calendar rather than eventWindow */}
+                    <Calendar events={events} day={day} setDay={setDay}/> 
+                    {/* day gets set here, not in event window, thus setDay is passed to calendar rather than eventWindow */}
                 </Col>
                 <Col xs='4' className='column'> {/**right*/}
-                    <EventWindow events={events} setEvents={setEvents} day={day}/> {/* event gets set here, not in calendar, thus setEvent is passed to to EventWindow rather than Calendar */}
+                    <EventWindow events={events} setEvents={setEvents} day={day}/>
+                    {/* event gets set here, not in calendar, thus setEvent is passed to to EventWindow rather than Calendar */}
                 </Col>
             </Row>
         </Container>
