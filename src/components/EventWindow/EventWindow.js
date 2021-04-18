@@ -1,6 +1,6 @@
 import React from 'react'
 import './EventWindow.css';
-
+import { Button } from 'reactstrap';
 const EventWindow = ({events, setEvents, day}) => {
     // console.log(events[6])
 
@@ -25,7 +25,12 @@ const EventWindow = ({events, setEvents, day}) => {
     return (
         <div className='EventWindow'>
             {`Currently selected day is ${day}`}
-            {findMatchingDay.map(event => <h3>{event.description}</h3>)}
+            {findMatchingDay.map(event => 
+                <h3>
+                    {event.description} <Button color="danger">{event.id}</Button>
+                </h3>)} 
+            {/* <Button color="danger"></Button>{'Delete'} */}
+
             {/* takes filtered array, and displays each event's description when that day is clicked on */}
         </div>
     )
