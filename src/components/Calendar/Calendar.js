@@ -19,18 +19,19 @@ const Calendar = ({events, day, setDay}) => {
     // const addBulletToDaysWithEvents = daysWithEvents.
 
 
-    // const datesAreOnSameDay = (first, second) =>
-    //     first.getFullYear() === second.getFullYear() &&
-    //     first.getMonth() === second.getMonth() &&
-    //     first.getDate() === second.getDate();
+    const datesAreOnSameDay = (first, second) =>
+        first.getFullYear() === second.getFullYear() &&
+        first.getMonth() === second.getMonth() &&
+        first.getDate() === second.getDate();
 
-
+    console.log(events);
 
     return (
         // refer to react calendar documentation for the line below
         // runs onClickDay function anytime a day on the calendar is clicked
         // <ReactCalendar onClickDay={(value) => setDay(value)}/>
-        <ReactCalendar onClickDay={(value) => setDay(value)} tileContent={({ date, view }) => view === 'month' && date.getDay() === 0 ? <p>.</p> : <p>&nbsp;&nbsp;</p>}/>
+        <ReactCalendar onClickDay={(value) => setDay(value)} tileContent={({ date, view }) => view === 'month' && events.some(event => datesAreOnSameDay(date, new Date(event.startDate))) ? <p>.</p> : <p>&nbsp;&nbsp;</p>
+        }/>
     ); // needs more work. Figure out syntax for tileContent to show '.' on days that have events, not just the current day
 }
 
