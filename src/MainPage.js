@@ -3,6 +3,7 @@ import Header from './components/Header/Header.js';
 import EventWindow from './components/EventWindow/EventWindow.js';
 import { Container, Row, Col } from 'reactstrap';
 import Calendar from './components/Calendar/Calendar'; 
+// import { BrowserRouter } from "react-router-dom";
 
 const MainPage = () => {
 
