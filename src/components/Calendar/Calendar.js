@@ -30,7 +30,7 @@ const Calendar = ({events, day, setDay}) => {
         // refer to react calendar documentation for the line below
         // runs onClickDay function anytime a day on the calendar is clicked
         // <ReactCalendar onClickDay={(value) => setDay(value)}/>
-        <ReactCalendar onClickDay={(value) => setDay(value)} tileContent={({ date, view }) => view === 'month' && events.some(event => datesAreOnSameDay(date, new Date(event.startDate))) ? <p>.</p> : <p>&nbsp;&nbsp;</p>
+        <ReactCalendar calendarType={'US'} onClickDay={(value) => setDay(value)} tileContent={({ date, view }) => view === 'month' && events.some(event => datesAreOnSameDay(date, new Date(event.startDate))) ? <p>.</p> : <p>&nbsp;&nbsp;</p>
         }/>
     ); // needs more work. Figure out syntax for tileContent to show '.' on days that have events, not just the current day
 }
