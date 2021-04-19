@@ -7,6 +7,8 @@ const EventWindow = ({events, setEvents, day}) => {
     
     if(!day){
         return(
+            
+            
             // incase no day is selected, displays this as default
             <>
                 Please select a day
