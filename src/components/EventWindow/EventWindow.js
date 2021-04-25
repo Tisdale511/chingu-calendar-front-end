@@ -4,8 +4,36 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, La
 const EventWindow = ({events, setEvents, day, getEvents}) => {
     //  add 'Is loading' message to lock out UI while delete process is finishing
 
+    const [eventName, setEventName] = React.useState('');
+    const [eventDescription, setEventDescription] = React.useState('');
+    const [eventStartTime, setEventStartTime] = React.useState('');
+    const [eventEndTime, setEventEndTime] = React.useState('')
+    // const [eventStartDate, setEventStartDate] = React.useState('')
 
-
+    const submitEvent = () => {
+        console.log(eventName)
+        console.log(eventStartTime)
+        fetch(`http://localhost:3000/events`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: eventName,
+                description: eventDescription,
+                startTime: `${day.toISOString().slice(0, 10)}T${eventStartTime}:00.000Z`,
+                endTime: `${day.toISOString().slice(0, 10)}T${eventEndTime}:00.000Z`,
+                startDate: day
+            })
+        }
+        )
+        .then(res => {
+            if(res.status === 200){
+                toggle()
+                getEvents()
+            }
+        })
+    }
 
     const createEvent = () => {
         console.log('Make event here')
@@ -24,6 +52,10 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
 
     const toggle = () => setIsEventModalShown(!isEventModalShown);
 
+    // date.toISOString().slice(0, 10)
+    // "2021-01-01T00:00:00.000Z"
+
+
     const datesAreOnSameDay = (first, second) =>
         first.getFullYear() === second.getFullYear() &&
         first.getMonth() === second.getMonth() &&
@@ -36,7 +68,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             {`Currently selected day is ${day}`}
             {findMatchingDay.length !== 0 ? findMatchingDay.map(event => 
                 <h3 key={`event${event.id}`}>
-                    {event.description} <Button onClick={() => deleteEvent(event.id)} color="danger">{'X'}</Button>
+                    {event.name} <Button onClick={() => deleteEvent(event.id)} color="danger">{'X'}</Button>
                 </h3>) : 
                 <h5>
                     No events on this day
@@ -53,24 +85,24 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                             <Form>
                                 <FormGroup>
                                     <Label for="eventName">Event</Label>
-                                    <Input type="text" name="event" id="eventName"/>
+                                    <Input type="text" name="event" id="eventName" onChange={(e) => setEventName(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="eventDescription">Description</Label>
-                                    <Input type="text" name="description" id="eventDescription"/>
+                                    <Input type="text" name="description" id="eventDescription" onChange={(e) => setEventDescription(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="eventStartTime">Start Time</Label>
-                                    <Input type="time" name="startTime" id="eventStartTime" />
+                                    <Input type="time" name="startTime" id="eventStartTime" onChange={(e) => setEventStartTime(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="eventEndTime">End Time</Label>
-                                    <Input type="time" name="endTime" id="eventEndTime" />
+                                    <Input type="time" name="endTime" id="eventEndTime" onChange={(e) => setEventEndTime(e.target.value)}/>
                                 </FormGroup>
                             </Form>
                         </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={toggle}>Submit</Button>{' '}
+                        <Button color="primary" onClick={submitEvent}>Submit</Button>{' '}
                         <Button color="secondary" onClick={toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
