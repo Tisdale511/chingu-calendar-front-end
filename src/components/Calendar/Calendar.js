@@ -13,18 +13,12 @@ const Calendar = ({events, day, setDay}) => {
 
     //wire up dummy delete buttons-- logging id to console of event I want to delete will help make delete button backend ready
 
-    // simple example: put dot on every even day
-
-    // const daysWithEvents = events.filter(event => new Date(event))
-    // const addBulletToDaysWithEvents = daysWithEvents.
-
-
     const datesAreOnSameDay = (first, second) =>
         first.getFullYear() === second.getFullYear() &&
         first.getMonth() === second.getMonth() &&
         first.getDate() === second.getDate();
 
-    console.log(events);
+    // console.log(events);
 
     return (
         // refer to react calendar documentation for the line below
@@ -32,7 +26,7 @@ const Calendar = ({events, day, setDay}) => {
         // <ReactCalendar onClickDay={(value) => setDay(value)}/>
         <ReactCalendar calendarType={'US'} onClickDay={(value) => setDay(value)} tileContent={({ date, view }) => view === 'month' && events.some(event => datesAreOnSameDay(date, new Date(event.startDate))) ? <p>.</p> : <p>&nbsp;&nbsp;</p>
         }/>
-    ); // needs more work. Figure out syntax for tileContent to show '.' on days that have events, not just the current day
+    ); 
 }
 
 export default Calendar
