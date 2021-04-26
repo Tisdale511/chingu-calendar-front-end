@@ -1,8 +1,11 @@
 import React from 'react'
 import './EventWindow.css';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input} from 'reactstrap';
 const EventWindow = ({events, setEvents, day, getEvents}) => {
     //  add 'Is loading' message to lock out UI while delete process is finishing
+
+    const API_ROOT = 'http://localhost:3000'
+
 
     const [eventName, setEventName] = React.useState('');
     const [eventDescription, setEventDescription] = React.useState('');
@@ -10,10 +13,11 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
     const [eventEndTime, setEventEndTime] = React.useState('')
     // const [eventStartDate, setEventStartDate] = React.useState('')
 
+
     const submitEvent = () => {
         console.log(eventName)
         console.log(eventStartTime)
-        fetch(`http://localhost:3000/events`, {
+        fetch(`${API_ROOT}/events`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -35,12 +39,33 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
         })
     }
 
-    const createEvent = () => {
-        console.log('Make event here')
-    }
+    // const updateEvent = (id) => {
+    //     console.log(eventName)
+    //     console.log(eventStartTime)
+    //     fetch(`${API_ROOT}/events/${id}`, {
+    //         method: "PUT",
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             name: eventName,
+    //             description: eventDescription,
+    //             startTime: `${day.toISOString().slice(0, 10)}T${eventStartTime}:00.000Z`,
+    //             endTime: `${day.toISOString().slice(0, 10)}T${eventEndTime}:00.000Z`,
+    //             startDate: day
+    //         })
+    //     }
+    //     )
+    //     .then(res => {
+    //         if(res.status === 200){
+    //             toggle()
+    //             getEvents()
+    //         }
+    //     })
+    // }
 
     const deleteEvent = (id) => {
-        fetch(`http://localhost:3000/events/${id}`, {method: "DELETE"})
+        fetch(`${API_ROOT}/events/${id}`, {method: "DELETE"})
         .then(res => {
             if(res.status === 200){
                 getEvents()
@@ -52,8 +77,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
 
     const toggle = () => setIsEventModalShown(!isEventModalShown);
 
-    // date.toISOString().slice(0, 10)
-    // "2021-01-01T00:00:00.000Z"
+
 
 
     const datesAreOnSameDay = (first, second) =>
