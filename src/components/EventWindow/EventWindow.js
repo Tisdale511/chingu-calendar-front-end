@@ -41,30 +41,32 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
 
     const createEventModal = () => setIsCreateEventModalShown(!isCreateEventModalShown);
     
-    // const updateEvent = (id) => {
-    //     console.log(eventName)
-    //     console.log(eventStartTime)
-    //     fetch(`${API_ROOT}/events/${id}`, {
-    //         method: "PUT",
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             name: eventName,
-    //             description: eventDescription,
-    //             startTime: `${day.toISOString().slice(0, 10)}T${eventStartTime}:00.000Z`,
-    //             endTime: `${day.toISOString().slice(0, 10)}T${eventEndTime}:00.000Z`,
-    //             startDate: day
-    //         })
-    //     }
-    //     )
-    //     .then(res => {
-    //         if(res.status === 200){
-    //             toggle()
-    //             getEvents()
-    //         }
-    //     })
-    // }
+    const updateEvent = (id) => {
+        fetch(`${API_ROOT}/events/${id}`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: eventName,
+                description: eventDescription,
+                startTime: `${day.toISOString().slice(0, 10)}T${eventStartTime}:00.000Z`,
+                endTime: `${day.toISOString().slice(0, 10)}T${eventEndTime}:00.000Z`,
+                startDate: day
+            })
+        }
+        )
+        .then(res => {
+            if(res.status === 200){
+                triggerUpdateModal()
+                getEvents()
+            }
+        })
+    }
+
+    const [eventUpdateId, setEventUpdateId] = React.useState(null)
+
+    const triggerUpdateModal = () => setEventUpdateId(!eventUpdateId)
 
     const deleteEvent = (id) => {
         fetch(`${API_ROOT}/events/${id}`, {method: "DELETE"})
@@ -75,9 +77,9 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
         })
     }
 
-    const [isEventModalShown, setIsEventModalShown] = React.useState(false);
+    const [detailsEventId, setDetailsEventId] = React.useState(null);
 
-    const showEventModal = () => setIsEventModalShown(!isEventModalShown);
+    const triggerEventId = (id) => setDetailsEventId(id);
 
 
     const datesAreOnSameDay = (first, second) =>
@@ -87,18 +89,23 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
 
     const findMatchingDay = events.filter(event => datesAreOnSameDay(day, new Date(event.startDate))) // searches through all events to compare the current 'day' to the day of 'event'
 
+    console.log(day)
     const showOnlyMonthAndDay = () => {
         const currentDate = day.toString();
         const currentDateWithoutTime = currentDate.slice(0,10);
         return currentDateWithoutTime
     }
 
+    const currentEvent = events.find(event => event.id === detailsEventId) || {}
+
+    const updateFromEventDetailsModal = events.find(event => event.id === eventUpdateId) || {}
+
     return (
         <div className='EventWindow'>
-            <h4>{`${showOnlyMonthAndDay(day)}`}</h4>
+            <h4>{showOnlyMonthAndDay(day)}</h4>
             {findMatchingDay.length !== 0 ? findMatchingDay.map(event => 
                 <h4 key={`event${event.id}`}>
-                    {eventStartTime}{' '} <Button onClick={() => showEventModal()} color='link'><h4>{event.name}</h4></Button>{' '}<Button onClick={() => deleteEvent(event.id)} color="danger">{'X'}</Button>
+                    {event.startTime.toString().slice(11, 16)}{' '} <Button onClick={() => triggerEventId(event.id)} color='link'><h4>{event.name}</h4></Button>{' '}<Button onClick={() => deleteEvent(event.id)} color="danger">{'Delete'}</Button>
                 </h4>) : 
                 <h4>
                     No events on this day
@@ -108,7 +115,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             
             {/* takes filtered array, and displays each event's description when that day is clicked on */}
             <div className='newEventWrapper'>
-                <Button color="danger" onClick={createEventModal} className='newEventButton'>New Event</Button>
+                <Button color="primary" onClick={createEventModal} className='newEventButton'>New Event</Button>
                 <Modal isOpen={isCreateEventModalShown} createEventModal={createEventModal}>
                     <ModalHeader createEventModal={createEventModal}>New Event</ModalHeader>
                         <ModalBody>
@@ -133,21 +140,53 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                         </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={submitEvent}>Submit</Button>{' '}
+                        <Button color="secondary" onClick={createEventModal}>Close</Button>
+                    </ModalFooter>
+                </Modal>
+
+                {/* <Button color="primary" onClick={triggerUpdateModal} className='updateEventButton'>Update Event</Button> */}
+                <Modal isOpen={eventUpdateId} triggerUpdateModal={triggerUpdateModal}>
+                    <ModalHeader triggerUpdateModal={triggerUpdateModal}>Update Event</ModalHeader>
+                        <ModalBody>
+                            <Form>
+                                <FormGroup>
+                                    <Label for="eventName">Event</Label>
+                                    <Input type="text" name="event" id="eventName" onChange={(e) => setEventName(e.target.value)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="eventDescription">Description</Label>
+                                    <Input type="text" name="description" id="eventDescription" onChange={(e) => setEventDescription(e.target.value)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="eventStartTime">Start Time</Label>
+                                    <Input type="time" name="startTime" id="eventStartTime" onChange={(e) => setEventStartTime(e.target.value)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="eventEndTime">End Time</Label>
+                                    <Input type="time" name="endTime" id="eventEndTime" onChange={(e) => setEventEndTime(e.target.value)}/>
+                                </FormGroup>
+                            </Form>
+                        </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={updateEvent}>Submit</Button>{' '}
+                        <Button color="secondary" onClick={triggerUpdateModal}>Close</Button>
                     </ModalFooter>
                 </Modal>
                 
-                <Modal isOpen={isEventModalShown} showEventModal={showEventModal}>
-                    <ModalHeader showEventModal={showEventModal}>Event Details</ModalHeader>
+
+
+                <Modal isOpen={detailsEventId !== null} triggerEventId={triggerEventId}>
+                    <ModalHeader triggerEventId={triggerEventId}>Event Details</ModalHeader>
                         <ModalBody>
-                            Name: {events.name}<br></br>
-                            Description: {events.description}<br></br>
-                            Start Time: {events.starTime}<br></br>
-                            End Time: {events.endTime}
+                            Name: {currentEvent.name}<br></br>
+                            Description: {currentEvent.description}<br></br>
+                            Start Time: {currentEvent.startTime}<br></br>
+                            End Time: {currentEvent.endTime}
 
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={showEventModal}>Do Something</Button>{' '}
-                            <Button color="secondary" onClick={showEventModal}>Close</Button>
+                            <Button color="primary" onClick={triggerUpdateModal}>Update</Button>{' '}
+                            <Button color="secondary" onClick={() => setDetailsEventId(null)}>Close</Button>
 
                         </ModalFooter>
                 </Modal>

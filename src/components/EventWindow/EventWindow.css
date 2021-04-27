@@ -3,7 +3,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: yellow;
+    background-color: rgb(213, 221, 233);
 }
 
 .newEventButton{
