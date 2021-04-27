@@ -17,3 +17,9 @@
     justify-content: center;
     display: flex;
 }
+
+.eventLabel{
+    font-weight: bold;
+    width: 120px;
+    display: inline-block;
+}
