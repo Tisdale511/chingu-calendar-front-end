@@ -1,6 +1,8 @@
 import React from 'react'
 import './EventWindow.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input} from 'reactstrap';
+// import DateTimePicker from 'react-datetime-picker';
+
 const EventWindow = ({events, setEvents, day, getEvents}) => {
     //  add 'Is loading' message to lock out UI while delete process is finishing
 
@@ -33,9 +35,9 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                 name: eventName,
                 description: eventDescription,
                 // endDate: `${day.toISOString().slice(0, 10)}T${eventEndDate}:00.000Z`,
-                startDate: `${eventStartDate.toISOString().slice(0,10)}T${eventStartDate.slice(11, 16)}:00.0000z`,
+                startDate: eventStartDate,
                 // startDate: `${eventStartDate.slice(0,10)}T${eventStartDate.slice(11, 16)}:00.000Z`,
-                endDate: `${eventEndDate.toISOString().slice(0,10)}T${eventEndDate.slice(11, 16)}:00.0000z`,
+                endDate: eventEndDate,
                 // endDate: `${eventEndDate.slice(0,10)}T${eventEndDate.slice(11, 16)}:00.000Z`
                 
             })
@@ -63,8 +65,8 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             body: JSON.stringify({
                 name: eventName,
                 description: eventDescription,
-                startDate: !eventStartDate ? currentEvent.startDate : `${day.toISOString().slice(0, 10)}T${eventStartDate}:00.000Z`,
-                endDate: !eventEndDate ? currentEvent.endDate : `${day.toISOString().slice(0, 10)}T${eventEndDate}:00.000Z`
+                startDate: eventStartDate,
+                endDate: eventEndDate,
             })
         }
         )
@@ -99,7 +101,6 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
     
     const findMatchingDay = events.filter(event => datesAreOnSameDay(day, new Date(event.startDate))) // searches through all events to compare the current 'day' to the day of 'event'
     
-    console.log(new Date)
     const showOnlyMonthAndDay = () => {
         const currentDate = day.toString();
         const currentDateWithoutTime = currentDate.slice(0,10);
@@ -117,6 +118,13 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
         description: ''
     }
     
+    // const manipulateDate = (myDate) => {
+    //     const date = new Date(myDate);
+    //     console.log(date)
+    //     const myDateTime = `${date.getYear()}-${date.getMonth()}-${date.getDate()},${date.getHours()}:${date.getMinutes()}}`
+    //     return myDateTime
+    // }
+
     return (
         <div className='EventWindow'>
             <h4>{showOnlyMonthAndDay(day)}</h4>
@@ -146,20 +154,20 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="eventStartTime">Start Time</Label>
-                                    <Input type="time" name="startDate" id="eventStartTime" onChange={(e) => console.log(e.target.value)}/>
+                                    <Input type="datetime-local" name="startDate" id="eventStartTime" onChange={(e) => setEventStartDate(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="eventEndTime">End Time</Label>
-                                    <Input type="time" name="startDate" id="eventEndTime" onChange={(e) => console.log(e.target.value)}/>
+                                    <Input type="datetime-local" name="startDate" id="eventEndTime" onChange={(e) => setEventEndDate(e.target.value)}/>
                                 </FormGroup>
-                                <FormGroup>
+                                {/* <FormGroup>
                                     <Label for="eventStartDate">Start Time</Label>
                                     <Input type="date" name="startDate" id="eventStartDate" onChange={(e) => setEventStartDate(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="eventEndDate">End Time</Label>
                                     <Input type="date" name="endDate" id="eventEndDate" onChange={(e) => setEventEndDate(e.target.value)}/>
-                                </FormGroup>
+                                </FormGroup> */}
                             </Form>
                         </ModalBody>
                     <ModalFooter>
@@ -183,20 +191,20 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="eventStartTime">Start Time</Label>
-                                    <Input defaultValue={currentEvent.startDate.slice(11, 16)} type="time" name="startTime" id="eventStartDate" onChange={(e) => setEventStartDate(e.target.value)}/>
+                                    <Input defaultValue={currentEvent.startDate.slice(0,16)} type="datetime-local" name="startTime" id="eventStartDate" onChange={(e) => setEventStartDate(e.target.value)}/>{console.log(currentEvent.startDate)}
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="eventEndDTime">End Time</Label>
-                                    <Input defaultValue={currentEvent.endDate.slice(11, 16)}type="time" name="endTime" id="eventEndDate" onChange={(e) => setEventEndDate(e.target.value)}/>
+                                    <Input defaultValue={currentEvent.endDate.slice(0,16)}type="datetime-local" name="endTime" id="eventEndDate" onChange={(e) => setEventEndDate(e.target.value)}/>
                                 </FormGroup>
-                                <FormGroup>
+                                {/* <FormGroup>
                                     <Label for="eventStartDate">Start Date</Label>
                                     <Input defaultValue={currentEvent.startDate.slice(0, 10)} type="date" name="startDate" id="eventStartDate" onChange={(e) => setEventStartDate(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="eventEndDate">End Date</Label>
                                     <Input defaultValue={currentEvent.endDate.slice(0, 10)}type="date" name="endDate" id="eventEndDate" onChange={(e) => setEventEndDate(e.target.value)}/>
-                                </FormGroup>
+                                </FormGroup> */}
                             </Form>
                         </ModalBody>
                     <ModalFooter>
