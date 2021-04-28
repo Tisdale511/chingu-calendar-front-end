@@ -15,8 +15,8 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
 
     const [eventName, setEventName] = React.useState('');
     const [eventDescription, setEventDescription] = React.useState('');
-    const [eventStartTime, setEventStartTime] = React.useState('');
-    const [eventEndTime, setEventEndTime] = React.useState('')
+    const [eventStartDate, setEventStartDate] = React.useState('');
+    const [eventEndDate, setEventEndDate] = React.useState('')
     // const [eventStartDate, setEventStartDate] = React.useState('')
     // const [eventEndDate, setEventEndDate] = React.useState('')
 
@@ -30,10 +30,10 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             body: JSON.stringify({
                 name: eventName,
                 description: eventDescription,
-                startTime: `${day.toISOString().slice(0, 10)}T${eventStartTime}:00.000Z`,
-                endTime: `${day.toISOString().slice(0, 10)}T${eventEndTime}:00.000Z`,
-                // startDate: `${startDate}T${eventStartTime}:00.000Z`
-                startDate: day
+                // endDate: `${day.toISOString().slice(0, 10)}T${eventEndDate}:00.000Z`,
+                startDate: `${eventStartDate.slice(0,10)}T${eventStartDate.slice(11, 16)}:00.000Z`,
+                startDate: `${eventEndDate.slice(0,10)}T${eventEndDate.slice(11, 16)}:00.000Z`
+                
             })
         }
         )
@@ -44,7 +44,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             }
         })
     }
-    
+    console.log(day)
     const [isCreateEventModalShown, setIsCreateEventModalShown] = React.useState(false);
 
     const createEventModal = () => setIsCreateEventModalShown(!isCreateEventModalShown);
@@ -59,9 +59,8 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             body: JSON.stringify({
                 name: eventName,
                 description: eventDescription,
-                startTime: !eventStartTime ? currentEvent.startTime : `${day.toISOString().slice(0, 10)}T${eventStartTime}:00.000Z`,
-                endTime: !eventEndTime ? currentEvent.endTime : `${day.toISOString().slice(0, 10)}T${eventEndTime}:00.000Z`,
-                startDate: day
+                startDate: !eventStartDate ? currentEvent.startDate : `${day.toISOString().slice(0, 10)}T${eventStartDate}:00.000Z`,
+                endDate: !eventEndDate ? currentEvent.endDate : `${day.toISOString().slice(0, 10)}T${eventEndDate}:00.000Z`
             })
         }
         )
@@ -77,7 +76,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
     
     const triggerUpdateModal = () => setEventUpdateId(!eventUpdateId)
 
-    const updateFromEventDetailsModal = events.find(event => event.id === eventUpdateId) || {}
+    // const updateFromEventDetailsModal = events.find(event => event.id === eventUpdateId) || {}
 
     const deleteEvent = (id) => {
         fetch(`${API_ROOT}/events/${id}`, {method: "DELETE"})
@@ -108,8 +107,8 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
     const triggerEventId = (id) => setDetailsEventId(id);
 
     const currentEvent = events.find(event => event.id === detailsEventId) || {
-        startTime: '',
-        endTime: '',
+        startDate: '',
+        endDate: '',
         name: '',
         description: ''
     }
@@ -119,7 +118,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             <h4>{showOnlyMonthAndDay(day)}</h4>
             {findMatchingDay.length !== 0 ? findMatchingDay.map(event => 
                 <h4 key={`event${event.id}`}>
-                    {event.startTime.toString().slice(11, 16)}{' '} <Button onClick={() => triggerEventId(event.id)} color='link'><h4>{event.name}</h4></Button>{' '}
+                    {event.startDate.toString().slice(11, 16)}{' '} <Button onClick={() => triggerEventId(event.id)} color='link'><h4>{event.name}</h4></Button>{' '}
                 </h4>) : 
                 <h4>
                     No events on this day
@@ -142,16 +141,20 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                                     <Input type="text" name="description" id="eventDescription" onChange={(e) => setEventDescription(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="eventStartDate">Start Date</Label>
-                                    <Input type="date" name="startDate" id="eventStartDate" onChange={(e) => console.log(e.target.value)}/>
+                                    <Label for="eventStartTime">Start Date</Label>
+                                    <Input type="time" name="startDate" id="eventStartTime" onChange={(e) => console.log(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="eventStartTime">Start Time</Label>
-                                    <Input type="time" name="startTime" id="eventStartTime" onChange={(e) => setEventStartTime(e.target.value)}/>
+                                    <Label for="eventEndTime">Start Date</Label>
+                                    <Input type="time" name="startDate" id="eventEndTime" onChange={(e) => console.log(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="eventEndTime">End Time</Label>
-                                    <Input type="time" name="endTime" id="eventEndTime" onChange={(e) => setEventEndTime(e.target.value)}/>
+                                    <Label for="eventStartDate">Start Time</Label>
+                                    <Input type="date" name="startDate" id="eventStartDate" onChange={(e) => setEventStartDate(e.target.value)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="eventEndDate">End Time</Label>
+                                    <Input type="date" name="endDate" id="eventEndDate" onChange={(e) => setEventEndDate(e.target.value)}/>
                                 </FormGroup>
                             </Form>
                         </ModalBody>
@@ -176,11 +179,19 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="eventStartTime">Start Time</Label>
-                                    <Input defaultValue={currentEvent.startTime.slice(11, 16)} type="time" name="startTime" id="eventStartTime" onChange={(e) => setEventStartTime(e.target.value)}/>
+                                    <Input defaultValue={currentEvent.startDate.slice(11, 16)} type="time" name="startTime" id="eventStartDate" onChange={(e) => setEventStartDate(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="eventEndTime">End Time</Label>
-                                    <Input defaultValue={currentEvent.endTime.slice(11, 16)}type="time" name="endTime" id="eventEndTime" onChange={(e) => setEventEndTime(e.target.value)}/>
+                                    <Label for="eventEndDTime">End Time</Label>
+                                    <Input defaultValue={currentEvent.endDate.slice(11, 16)}type="time" name="endTime" id="eventEndDate" onChange={(e) => setEventEndDate(e.target.value)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="eventStartDate">Start Date</Label>
+                                    <Input defaultValue={currentEvent.startDate.slice(0, 10)} type="date" name="startDate" id="eventStartDate" onChange={(e) => setEventStartDate(e.target.value)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="eventEndDate">End Date</Label>
+                                    <Input defaultValue={currentEvent.endDate.slice(0, 10)}type="date" name="endDate" id="eventEndDate" onChange={(e) => setEventEndDate(e.target.value)}/>
                                 </FormGroup>
                             </Form>
                         </ModalBody>
@@ -202,10 +213,16 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                                 <span className='eventLabel'>Description: </span><span>{currentEvent.description}</span>
                             </div>
                             <div>
-                                <span className='eventLabel'>Start Time: </span><span>{currentEvent.startTime.slice(11, 16)}</span>
+                                <span className='eventLabel'>Start Time: </span><span>{currentEvent.startDate.slice(11, 16)}</span>
                             </div>
                             <div>
-                                <span className='eventLabel'>End Time: </span><span>{currentEvent.endTime.slice(11, 16)}</span>
+                                <span className='eventLabel'>End Time: </span><span>{currentEvent.endDate.slice(11, 16)}</span>
+                            </div>
+                            <div>
+                                <span className='eventLabel'>Start Date: </span><span>{currentEvent.startDate.slice(0, 10)}</span>
+                            </div>
+                            <div>
+                                <span className='eventLabel'>End Date: </span><span>{currentEvent.endDate.slice(0, 10)}</span>
                             </div>
 
                         </ModalBody>
