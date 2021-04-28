@@ -20,8 +20,10 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
     // const [eventStartDate, setEventStartDate] = React.useState('')
     // const [eventEndDate, setEventEndDate] = React.useState('')
 
+    
 
     const submitEvent = () => {
+        console.log(eventStartDate)
         fetch(`${API_ROOT}/events`, {
             method: "POST",
             headers: {
@@ -31,8 +33,10 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                 name: eventName,
                 description: eventDescription,
                 // endDate: `${day.toISOString().slice(0, 10)}T${eventEndDate}:00.000Z`,
-                startDate: `${eventStartDate.slice(0,10)}T${eventStartDate.slice(11, 16)}:00.000Z`,
-                startDate: `${eventEndDate.slice(0,10)}T${eventEndDate.slice(11, 16)}:00.000Z`
+                startDate: `${eventStartDate.toISOString().slice(0,10)}T${eventStartDate.slice(11, 16)}:00.0000z`,
+                // startDate: `${eventStartDate.slice(0,10)}T${eventStartDate.slice(11, 16)}:00.000Z`,
+                endDate: `${eventEndDate.toISOString().slice(0,10)}T${eventEndDate.slice(11, 16)}:00.0000z`,
+                // endDate: `${eventEndDate.slice(0,10)}T${eventEndDate.slice(11, 16)}:00.000Z`
                 
             })
         }
@@ -44,7 +48,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             }
         })
     }
-    console.log(day)
+    
     const [isCreateEventModalShown, setIsCreateEventModalShown] = React.useState(false);
 
     const createEventModal = () => setIsCreateEventModalShown(!isCreateEventModalShown);
@@ -95,7 +99,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
     
     const findMatchingDay = events.filter(event => datesAreOnSameDay(day, new Date(event.startDate))) // searches through all events to compare the current 'day' to the day of 'event'
     
-    console.log(day)
+    console.log(new Date)
     const showOnlyMonthAndDay = () => {
         const currentDate = day.toString();
         const currentDateWithoutTime = currentDate.slice(0,10);
@@ -141,11 +145,11 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                                     <Input type="text" name="description" id="eventDescription" onChange={(e) => setEventDescription(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="eventStartTime">Start Date</Label>
+                                    <Label for="eventStartTime">Start Time</Label>
                                     <Input type="time" name="startDate" id="eventStartTime" onChange={(e) => console.log(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="eventEndTime">Start Date</Label>
+                                    <Label for="eventEndTime">End Time</Label>
                                     <Input type="time" name="startDate" id="eventEndTime" onChange={(e) => console.log(e.target.value)}/>
                                 </FormGroup>
                                 <FormGroup>
