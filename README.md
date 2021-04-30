@@ -1,4 +1,8 @@
-This is the front end code for my calendar app. It functions any regular calendar app, it allows you to make appoints by date and time, name them, and add descriptions. 
+This is the front end code for my calendar app. It functions like any regular calendar app, it allows you to make appoints by date and time, name them, and add descriptions. 
+
+The purpose of this app was to sharpen my full stack skills in order to prepare for my first chingu voyage. 
+
+LIVE LINK: https://amazing-brattain-ac1e9a.netlify.app/
 
 **To run this app locally**
 1) fork and install my backend app **and follow the readme** at https://github.com/Tisdale511/chingu-calendar-backend
@@ -18,3 +22,7 @@ This is the front end code for my calendar app. It functions any regular calenda
     "reactstrap": "^8.9.0",
     "web-vitals": "^1.0.1"
 
+
+
+**Features**
+A complete list of features can be found here: https://github.com/chingu-voyages/soloproject-tier3-ecalendar
