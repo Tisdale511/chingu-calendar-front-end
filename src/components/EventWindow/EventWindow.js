@@ -66,8 +66,8 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             body: JSON.stringify({
                 name: eventName,
                 description: eventDescription,
-                startDate: eventStartDate,
-                endDate: eventEndDate,
+                startDate: eventStartDate === '' ? currentEvent.eventStartDate : eventStartDate,
+                endDate: eventEndDate === '' ? currentEvent.eventEndDate : eventEndDate
             })
         }
         )
@@ -75,6 +75,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             if(res.status === 200){
                 triggerUpdateModal()
                 getEvents()
+                setDetailsEventId(null)
             }
         })
     }
@@ -216,7 +217,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                 
 
 
-                <Modal isOpen={detailsEventId !== null} >
+                <Modal isOpen={detailsEventId !== null } >
                     <ModalHeader>Event Details</ModalHeader>
                         <ModalBody>
                             <div>
@@ -241,8 +242,8 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                         </ModalBody>
                         <ModalFooter>
                         <Button color="danger" onClick={() => {
-                            if(window.confirm('Are you sure you want to delete this event?')){deleteEvent(currentEvent.id)}
-                        } }>Delete</Button>
+                            if(window.confirm('Are you sure you want to delete this event?')){deleteEvent(currentEvent.id); setDetailsEventId(null) }
+                        } }>Delete</Button> 
                             <Button color="primary" onClick={triggerUpdateModal}>Edit</Button>{' '}
                             <Button color="secondary" onClick={() => setDetailsEventId(null)}>Close</Button>
 
