@@ -19,7 +19,7 @@ const Calendar = ({events, day, setDay}) => {
         first.getDate() === second.getDate();
 
     // console.log(events);
-    const [currentDay, setCurrentDay] = React.useState(day);
+    const [currentDay] = React.useState(day);
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const getNextMonth = () => months[(currentDay.getMonth() + 1) % 12]
