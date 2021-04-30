@@ -19,12 +19,17 @@ const Calendar = ({events, day, setDay}) => {
         first.getDate() === second.getDate();
 
     // console.log(events);
+    const [currentDay, setCurrentDay] = React.useState(day);
+
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const getNextMonth = () => months[(currentDay.getMonth() + 1) % 12]
+    const getPreviousMonth = () => months[(currentDay.getMonth() + 11) % 12]
 
     return (
         // refer to react calendar documentation for the line below
         // runs onClickDay function anytime a day on the calendar is clicked
         // <ReactCalendar onClickDay={(value) => setDay(value)}/>
-        <ReactCalendar prevAriaLabel={'previous'} calendarType={'US'} onClickDay={(value) => setDay(value)} tileContent={({ date, view }) => view === 'month' && events.some(event => datesAreOnSameDay(date, new Date(event.startDate))) ? <p>•</p> : <p>&nbsp;</p>
+        <ReactCalendar prevLabel={`‹ ${getPreviousMonth()}`} nextLabel={`${getNextMonth(day)} ›`} prev2Label={null} next2Label={null} calendarType={'US'} onClickDay={(value) => setDay(value)} tileContent={({ date, view }) => view === 'month' && events.some(event => datesAreOnSameDay(date, new Date(event.startDate))) ? <p>•</p> : <p>&nbsp;</p>
         }/>
     ); 
 }

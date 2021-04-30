@@ -12,7 +12,8 @@ const MainPage = () => {
 
 
     const getEvents = () => {
-        fetch("http://localhost:3000/events")
+        // fetch("http://localhost:3000/events")
+        fetch('https://chingu-calendar-backend.herokuapp.com/events')
         .then(response => response.json())
         .then(response => setEvents(response))
     }

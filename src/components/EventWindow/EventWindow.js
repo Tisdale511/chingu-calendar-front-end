@@ -6,7 +6,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, La
 const EventWindow = ({events, setEvents, day, getEvents}) => {
     //  add 'Is loading' message to lock out UI while delete process is finishing
 
-    const API_ROOT = 'http://localhost:3000'
+    // const API_ROOT = 'http://localhost:3000'
+    const API_ROOT = 'https://chingu-calendar-backend.herokuapp.com'
 
     // consider implementing this format if time permits    
     // {"id": 2,
