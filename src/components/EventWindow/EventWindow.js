@@ -1,7 +1,6 @@
 import React from 'react'
 import './EventWindow.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input} from 'reactstrap';
-// import DateTimePicker from 'react-datetime-picker';
 
 const EventWindow = ({events, setEvents, day, getEvents}) => {
     //  add 'Is loading' message to lock out UI while delete process is finishing
@@ -55,6 +54,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                 description: eventDescription,
                 startDate: eventStartDate === '' ? currentEvent.eventStartDate : eventStartDate,
                 endDate: eventEndDate === '' ? currentEvent.eventEndDate : eventEndDate
+                // ternary statement required because upon opening the update modal, assigning it the default value is not setting an actual value
             })
         }
         )
