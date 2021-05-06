@@ -11,7 +11,6 @@ const Calendar = ({events, day, setDay}) => {
 
     // JS array function 'some', use this to display if any events have the same day of the tile, show something different
 
-    //wire up dummy delete buttons-- logging id to console of event I want to delete will help make delete button backend ready
 
     const datesAreOnSameDay = (first, second) =>
         first.getFullYear() === second.getFullYear() &&
