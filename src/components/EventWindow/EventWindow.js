@@ -9,19 +9,10 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
     // const API_ROOT = 'http://localhost:3000'
     const API_ROOT = 'https://chingu-calendar-backend.herokuapp.com'
 
-    // consider implementing this format if time permits    
-    // {"id": 2,
-    // "name": "nathan",
-    // "description": "is the best for helping me with this",
-    // "startDateTime": "2021-04-13T19:37:00.000Z",
-    // "endDateTime": "2021-04-13T20:37:00.000Z"}
-
     const [eventName, setEventName] = React.useState('');
     const [eventDescription, setEventDescription] = React.useState('');
     const [eventStartDate, setEventStartDate] = React.useState('');
-    const [eventEndDate, setEventEndDate] = React.useState('')
-    // const [eventStartDate, setEventStartDate] = React.useState('')
-    // const [eventEndDate, setEventEndDate] = React.useState('')
+    const [eventEndDate, setEventEndDate] = React.useState('');
 
     
 
@@ -35,12 +26,8 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
             body: JSON.stringify({
                 name: eventName,
                 description: eventDescription,
-                // endDate: `${day.toISOString().slice(0, 10)}T${eventEndDate}:00.000Z`,
                 startDate: eventStartDate,
-                // startDate: `${eventStartDate.slice(0,10)}T${eventStartDate.slice(11, 16)}:00.000Z`,
-                endDate: eventEndDate,
-                // endDate: `${eventEndDate.slice(0,10)}T${eventEndDate.slice(11, 16)}:00.000Z`
-                
+                endDate: eventEndDate,                
             })
         }
         )
@@ -84,8 +71,6 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
     
     const triggerUpdateModal = () => setEventUpdateId(!eventUpdateId)
 
-    // const updateFromEventDetailsModal = events.find(event => event.id === eventUpdateId) || {}
-
     const deleteEvent = (id) => {
         fetch(`${API_ROOT}/events/${id}`, {method: "DELETE"})
         .then(res => {
@@ -119,13 +104,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
         name: '',
         description: ''
     }
-    
-    // const manipulateDate = (myDate) => {
-    //     const date = new Date(myDate);
-    //     console.log(date)
-    //     const myDateTime = `${date.getYear()}-${date.getMonth()}-${date.getDate()},${date.getHours()}:${date.getMinutes()}}`
-    //     return myDateTime
-    // }
+
 
     return (
         <div className='EventWindow'>
@@ -162,14 +141,6 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                                     <Label for="eventEndTime">End Time</Label>
                                     <Input type="datetime-local" name="startDate" id="eventEndTime" onChange={(e) => setEventEndDate(e.target.value)}/>
                                 </FormGroup>
-                                {/* <FormGroup>
-                                    <Label for="eventStartDate">Start Time</Label>
-                                    <Input type="date" name="startDate" id="eventStartDate" onChange={(e) => setEventStartDate(e.target.value)}/>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="eventEndDate">End Time</Label>
-                                    <Input type="date" name="endDate" id="eventEndDate" onChange={(e) => setEventEndDate(e.target.value)}/>
-                                </FormGroup> */}
                             </Form>
                         </ModalBody>
                     <ModalFooter>
@@ -178,7 +149,6 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                     </ModalFooter>
                 </Modal>
 
-                {/* <Button color="primary" onClick={triggerUpdateModal} className='updateEventButton'>Update Event</Button> */}
                 <Modal isOpen={eventUpdateId} >
                     <ModalHeader>Update Event</ModalHeader>
                         <ModalBody>
@@ -198,15 +168,7 @@ const EventWindow = ({events, setEvents, day, getEvents}) => {
                                 <FormGroup>
                                     <Label for="eventEndDTime">End Time</Label>
                                     <Input defaultValue={currentEvent.endDate.slice(0,16)}type="datetime-local" name="endTime" id="eventEndDate" onChange={(e) => setEventEndDate(e.target.value)}/>
-                                </FormGroup>
-                                {/* <FormGroup>
-                                    <Label for="eventStartDate">Start Date</Label>
-                                    <Input defaultValue={currentEvent.startDate.slice(0, 10)} type="date" name="startDate" id="eventStartDate" onChange={(e) => setEventStartDate(e.target.value)}/>
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="eventEndDate">End Date</Label>
-                                    <Input defaultValue={currentEvent.endDate.slice(0, 10)}type="date" name="endDate" id="eventEndDate" onChange={(e) => setEventEndDate(e.target.value)}/>
-                                </FormGroup> */}
+                                </FormGroup>                         
                             </Form>
                         </ModalBody>
                     <ModalFooter>
