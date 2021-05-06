@@ -1,70 +1,28 @@
-# Getting Started with Create React App
+This is the front end code for my calendar app. It functions like any regular calendar app, it allows you to make appoints by date and time, name them, and add descriptions. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The purpose of this app was to sharpen my full stack skills in order to prepare for my first chingu voyage. 
 
-## Available Scripts
+LIVE LINK: https://amazing-brattain-ac1e9a.netlify.app/
 
-In the project directory, you can run:
+**To run this app locally**
+1) fork and install my backend app **and follow the readme** at https://github.com/Tisdale511/chingu-calendar-backend
 
-### `yarn start`
+2) fork this repo into the folder of your choosing, but not into the same folder as the backend app. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+3) cd into the application folder, and inside components, in MainPage.js towards the top of the page, un-comment the the fetch with local host, and comment out the fetch with the heroku URL. In EventWindow.js, towards the top of the page there is a const = API_KEY. Uncomment the local host const, and comment out the the const with the heroku URL
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+4) You'll need the following dependencies installed to run the app: 
+    "bootstrap": "^4.6.0",
+    "react": "^17.0.2",
+    "react-calendar": "^3.3.1",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-transition-group": "^4.4.1",
+    "reactstrap": "^8.9.0",
+    "web-vitals": "^1.0.1"
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Features**
+A complete list of features can be found here: https://github.com/chingu-voyages/soloproject-tier3-ecalendar
