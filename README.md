@@ -25,4 +25,4 @@ LIVE LINK: https://amazing-brattain-ac1e9a.netlify.app/
 
 
 **Features**
-A complete list of features can be found here: https://github.com/chingu-voyages/soloproject-tier3-ecalendar
+A complete list of features can be found here (scroll to down to "instructions"): https://github.com/chingu-voyages/soloproject-tier3-ecalendar
