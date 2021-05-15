@@ -21,7 +21,7 @@ const Calendar = ({events, day, setDay}) => {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const [nLabel, setNLabel] = React.useState(months[(new Date().getMonth() + 1) % 12])
     const [pLabel, setPLabel] = React.useState(months[(new Date().getMonth() + 11) % 12])
-    // these two lines are required in order for the next and previous month to render correctly on load
+    // these two lines are required in order for the next and previous month to render correctly on load 
     
 
     const updateMonthLabels = (date) => {
